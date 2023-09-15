@@ -1,0 +1,99 @@
+<!-- products.component.html -->
+
+<div class="header mb-5 mt-5 text-center">
+  <ul class="categories mt-3">
+    <li class="nav-item">
+      <a class="nav-link" [class.active]="selectedCategory === '*'" (click)="filterProducts('*')">Todos</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" [class.active]="selectedCategory === 'cone_trufado'" (click)="filterProducts('cone_trufado')">Cone Trufado</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" [class.active]="selectedCategory === 'bolo_pote'" (click)="filterProducts('bolo_pote')">Bolo de Pote</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" [class.active]="selectedCategory === 'bolo'" (click)="filterProducts('bolo')">Bolo</a>
+    </li>
+  </ul>  
+</div>
+
+
+<div class="container mb-5 mt-5">
+  <div class="row">
+    <div class="col-lg-4 col-md-4 col-sm-6" *ngFor="let product of filteredProducts">
+      <div class="card mt-3">
+        <img src="{{ product.imageUrl }}" alt="{{ product.name }}" class="card-img-top">
+        <div class="card-body text-center">
+          <h5 class="card-title">{{ product.name }}</h5>
+          <p class="card-text">{{ product.description }}</p>
+          <p class="card-text">Preço: R$ {{ product.price }}</p>
+          <div class="star mt-3 align-item-center">
+            <!-- Adicione as estrelas aqui, se necessário -->
+          </div>
+          <div class="p-3 shoe text-center text-white mt-3 cursor">
+            <button class="btn btn-primary btn-block" (click)="adicionarAoCarrinho(product)">
+              {{ estaNoCarrinho(product) ? 'Adicionar Mais' : 'Adicionar no Carrinho' }}
+            </button>
+            <div *ngIf="estaNoCarrinho(product)">
+              <p>Quantidade: {{ getCarrinhoItem(product).quantidade }}</p>
+              <p>Preço: R$ {{ getCarrinhoItem(product).price * getCarrinhoItem(product).quantidade }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="mb-5 mt-5 text-center">
+  <div class="btn btn-primary mb-3">
+    <button class="btn btn-primary btn-block" (click)="openModal(1)">
+      {{ carrinho.length === 0 ? 'Carrinho' : carrinho.length + ' item(s) = R$' + calcularPrecoTotal().toFixed(2) }}
+    </button>
+  </div>
+</div>
+
+
+<ng-template #modalTemplate>
+  <div class="modal-header bg-primary text-white">
+    <h4 class="modal-title pull-left">{{ title }}</h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div *ngFor="let item of carrinho">
+      <div class="mb-3">
+        <h5>{{ item.name }}</h5>
+        <p>Quantidade: {{ item.quantidade }}</p>
+        <p>Preço: R$ {{ item.price * item.quantidade }}</p>
+        <button class="btn btn-danger" (click)="removerDoCarrinho(item)">Remover</button>
+      </div>
+    </div>
+    <div *ngIf="carrinho.length > 0">
+      <p>Total: R$ {{ precoTotal }}</p>
+    </div>
+    <div *ngIf="carrinho.length > 0">
+      <p>Itens: R$ {{ itenTotal }}</p>
+    </div>
+  </div>
+  <button class="btn btn-primary btn-block" (click)="finalizarCompra()">
+    Finalizar Conta
+  </button>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modalRef?.hide()">Cancelar</button>
+  </div>
+</ng-template>
+
+
+
+<div class="alert alert-success" *ngIf="successMessage">
+    {{ successMessage }}
+</div>
+  
+<div class="alert alert-danger" *ngIf="errorMessage">
+    {{ errorMessage }}
+</div>
+  
+  

@@ -1,0 +1,84 @@
+<div class="container mt-5">
+  <h1>Lista de Produtos</h1>
+
+  <!-- Lista de Produtos -->
+  <div class="row mt-3">
+    <div class="col-md-6">
+      <ul class="list-group">
+        <li
+          class="list-group-item d-flex justify-content-between align-items-center"
+          *ngFor="let product of products"
+        >
+          {{ product.name }}
+          <button
+            class="btn btn-danger btn-sm"
+            (click)="deleteProduct(product.id)"
+          >
+            Excluir
+          </button>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Botão para abrir o modal de adição -->
+  <!-- Botão para abrir o modal de adição -->
+<button class="btn btn-primary mt-4" (click)="openModal">
+  Adicionar Produto
+</button>
+
+
+  <!-- Modal de Adição de Produto -->
+  <ng-template #modalTemplate>
+    <div class="modal-header bg-primary text-white">
+      <h4 class="modal-title pull-left">Adicionar Produto</h4>
+      <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <!-- Formulário para adicionar um novo produto -->
+      <form (submit)="addProduct()">
+        <div class="form-group">
+          <label for="productName">Nome do Produto:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="productName"
+            name="productName"
+            [(ngModel)]="newProduct.name"
+            required
+          />
+        </div>
+        <!-- Adicione outros campos aqui, como categoria, descrição, preço, etc. -->
+        <div class="form-group">
+          <label for="productCategory">Categoria:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="productCategory"
+            name="productCategory"
+            [(ngModel)]="newProduct.category"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="productPrice">Preço:</label>
+          <input
+            type="number"
+            class="form-control"
+            id="productPrice"
+            name="productPrice"
+            [(ngModel)]="newProduct.price"
+            required
+          />
+        </div>
+        <button type="submit" class="btn btn-primary">Adicionar</button>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="modalRef?.hide()">Cancelar</button>
+    </div>
+  </ng-template>
+
+</div>

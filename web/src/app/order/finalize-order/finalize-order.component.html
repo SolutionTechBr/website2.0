@@ -1,0 +1,58 @@
+<div class="container mt-5">
+    <h2 class="text-center">Revisar Pedido</h2>
+    <div *ngIf="produtosDoCarrinho.length > 0; else carrinhoVazio">
+      <ul>
+        <li *ngFor="let produto of produtosDoCarrinho">
+          <h3>{{ produto.name }}</h3>
+          <p>Quantidade: {{ produto.quantidade }}</p>
+          <p>Preço Unitário: R$ {{ produto.price }}</p>
+          <p>Preço Total: R$ {{ produto.price * produto.quantidade }}</p>
+        </li>
+      </ul>
+      <!-- Adicione campos de observação, método de pagamento e método de entrega aqui -->
+      <!-- Exemplo:
+      <div class="form-group">
+        <label for="observacao">Observação</label>
+        <textarea id="observacao" class="form-control"></textarea>
+      </div>
+      -->
+    </div>
+    <ng-template #carrinhoVazio>
+      <p class="text-center">Seu carrinho de compras está vazio.</p>
+    </ng-template>
+</div>
+  
+<form>
+  <div class="form-group">
+    <label for="metodoPagamento">Método de Pagamento:</label>
+    <select class="form-control" id="metodoPagamento">
+      <option value="pix">Pix</option>
+      <option value="debito">Cartão de Débito</option>
+      <option value="credito">Cartão de Crédito</option>
+      <option value="pagarDepois">Vou Pagar Depois</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="metodoEntrega">Método de Entrega:</label>
+    <select class="form-control" id="metodoEntrega">
+      <option value="retirar">Vou Retirar o Pedido</option>
+      <option value="entregar">Vou Querer que Entregue</option>
+    </select>
+  </div>
+  <div class="form-group" *ngIf="metodoEntrega === 'entregar'">
+    <label for="endereco">Endereço de Entrega:</label>
+    <input type="text" class="form-control" id="endereco">
+  </div>
+  <div class="form-group">
+    <label for="dataHora">Data e Hora:</label>
+    <input type="datetime-local" class="form-control" id="dataHora">
+  </div>
+</form>
+
+<div class="mb-5 mt-5 text-center">
+  <div class="btn btn-primary mb-3">
+    <button class="btn btn-primary btn-block" (click)="concluirCompra()">
+      Finalizar Pedido
+    </button>
+  </div>
+</div>

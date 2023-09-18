@@ -1,10 +1,19 @@
  import { Request, Response } from "express"
 import { ProductRepository } from "../services/ProductService"
+import fs from "fs"
+
 
 export class ProductPageController {
 
     async CreateProduct(req: Request, res: Response) {
+
         const { category, name, content, price, user_id } = req.body
+        const file = req.file
+
+
+        if (!name) {
+            return res.status(400).json({ message: 'Nome do pruoduto está vazio!'})
+        }
 
         if (!category) {
             return res.status(400).json({ message: 'Categoria do produto está vazia!'})
@@ -12,10 +21,6 @@ export class ProductPageController {
 
         if (content.length > 777) {
             return res.status(400).json({ message: 'As caracteristicass do produto devem ter no máximo 777 caracteres!' })
-        }
-
-        if (!name) {
-            return res.status(400).json({ message: 'Nome do pruoduto está vazio!'})
         }
        
         if (!price) {
@@ -28,7 +33,7 @@ export class ProductPageController {
         
         try {
             const newProduct = ProductRepository.create({
-            category, name, content, price, user_id })
+            category, name, content, price, user_id, url: file?.path, })
 
             await ProductRepository.save(newProduct)
 
@@ -43,7 +48,6 @@ export class ProductPageController {
     async deleteProduct(req: Request, res: Response) {
         const { id } = req.params;
 
-        
         // Certifique-se de que o id seja um número
         const productId = parseInt(id);
       
@@ -54,6 +58,8 @@ export class ProductPageController {
           if (!product) {
             return res.status(404).json({ message: 'Produto não encontrado' });
           }
+
+          fs.unlinkSync(product.url)
       
           // Remova o produto do banco de dados
           await ProductRepository.remove(product);

@@ -24,9 +24,8 @@
     <div class="col-lg-4 col-md-4 col-sm-6" *ngFor="let product of filteredProducts">
       <div class="card mt-3">
         <div class="card mt-3">
-         <!-- <img src="{{ product.imageUrl }}" alt="{{ product.name }}" class="card-img-top">
-         <img [src]="decodeImageBytesToBase64(product.dados)" alt="{{ product.name }}" class="card-img-top">
-           Resto do seu código HTML -->
+        <img src="{{ product.url }}" alt="{{ product.name }}" class="card-img-top">
+          <!-- Resto do seu código HTML -->
         </div>
         <div class="card-body text-center">
           <h5 class="card-title">{{ product.name }}</h5>

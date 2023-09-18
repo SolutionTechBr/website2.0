@@ -13,16 +13,12 @@ export class ProductService {
     return this.http.get(`${this.apiUrl}/products/1/listProduct`)
   }
 
-  getAllImages() {
-    return this.http.get(`${this.apiUrl}/image`)
-  }
-
   deleteProducts(productId: number) {
     return this.http.delete(`${this.apiUrl}/products/${productId}`);
   }
 
   addProducts(Product:any) {
-    return this.http.post(`${this.apiUrl}/products`, Product)
+    return this.http.post(`${this.apiUrl}/products`,  Product)
   }
 
 }

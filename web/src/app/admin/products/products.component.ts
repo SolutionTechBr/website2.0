@@ -25,6 +25,7 @@ export class ProductsComponent {
     name: '',
     content: '',
     price: '',
+    file: '',
     user_id: '1',
   };
   modalRef?: BsModalRef;
@@ -61,16 +62,14 @@ export class ProductsComponent {
     });
   }
   
-  
-
   addProduct() {
-  
+    // Certifique-se de que this.newProduct contém as informações do produto
     this.ProductService.addProducts(this.newProduct).subscribe(
       () => {
         console.log('Produto adicionado com sucesso.');
         this.successMessage = 'Produto cadastrado com sucesso!';
         this.errorMessage = ''; // Limpar a mensagem de erro, se houver
-        this.newProduct.name = ''; // Limpar o campo de entrada
+        this.newProduct = {}; // Limpar o objeto newProduct
         this.loadProducts(); // Recarregar a lista de produtos
       },
       (error) => {
@@ -80,6 +79,7 @@ export class ProductsComponent {
       }
     );
   }
+  
   
   modalDeleteProduct(productId: number) {
   this.productToDeleteId = productId;
@@ -104,6 +104,16 @@ export class ProductsComponent {
     );
     this.productToDeleteId = productId;
     this.showDeleteConfirmationModal = true;
+  }
+
+  updateImagePreview(event: any) {
+    if (event.target.files && event.target.files[0]) {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.newProduct.file = e.target.result;
+      };
+      reader.readAsDataURL(event.target.files[0]);
+    }
   }
   
   cancelDelete() {

@@ -9,6 +9,7 @@ import { BootstrapModule } from '../bootstrap.module' ;
 import { AdminComponent } from './admin.component';
 import { ProductsComponent } from './products/products.component';
 import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -23,6 +24,7 @@ import { FormsModule } from '@angular/forms';
     FullCalendarModule,
     BrowserAnimationsModule,
     CommonModule,
+    HttpClientModule, // Adicione o HttpClientModule aqui
     FormsModule,
     RouterModule.forChild([
       // Defina as rotas específicas do admin aqui

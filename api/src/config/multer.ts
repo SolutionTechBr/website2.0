@@ -8,6 +8,7 @@ function configureMulter() {
     },
     filename: function (req, file, cb) {
       cb(null, Date.now() + '-' + path.extname(file.originalname)); // Define o nome do arquivo (pode ser personalizado)
+      
     },
   });
 

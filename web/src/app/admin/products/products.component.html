@@ -25,8 +25,8 @@
     <div class="col-lg-4 col-md-4 col-sm-6" *ngFor="let product of filteredProducts">
       <div class="card mt-3">
         <div class="card mt-3">
-          <!--<img [src]="decodeImageBytesToBase64(product.dados)" alt="{{ product.name }}" class="card-img-top">
-           Resto do seu código HTML -->
+          <img src="{{ product.url }}" alt="{{ product.name }}" class="card-img-top">
+          <!--Resto do seu código HTML -->
         </div>
         <div class="card-body text-center">
           <h5 class="card-title">{{ product.name }}</h5>
@@ -78,7 +78,7 @@
           type="text"
           class="form-control"
           id="productName"
-          name="productName"
+          name="text"
           [(ngModel)]="newProduct.name"
           required
         />
@@ -103,7 +103,7 @@
           class="form-control"
           id="productDescription"
           name="productDescription"
-          [(ngModel)]="newProduct.description"
+          [(ngModel)]="newProduct.content"
           rows="4"
         ></textarea>
       </div>
@@ -119,26 +119,25 @@
         />
       </div>
 
-      <!--Adicionar imagem no banco de dados
+      <!--Adicionar imagem no banco de dados-->
       <div class="form-group">
         <label for="productImage">Imagem:</label>
         <input
-          type="file"
-          class="form-control-file"
-          id="productImage"
-          name="dados"
-          [(ngModel)]="newProduct.dados"
-          required
-        />
+        type="file"
+        class="form-control-file"
+        id="productImage"
+        name="file"
+        (change)="updateImagePreview($event)"
+        required/>
       </div>
-       Visualização da imagem selecionada 
+      <!--Visualização da imagem selecionada --> 
       <img
-        *ngIf="newProduct.image"
-        [src]="newProduct.image"
+        *ngIf="newProduct.file"
+        [src]="newProduct.file"
         alt="Imagem Selecionada"
         class="mt-3"
         style="max-width: 200px; max-height: 200px;"
-      />-->
+      />
 
       <button type="submit" class="btn btn-primary">Adicionar</button>
     </form>
@@ -168,6 +167,6 @@
 </ng-template>
 
 
-<!-- Adicione isso onde você deseja exibir as mensagens -->
+Adicione isso onde você deseja exibir as mensagens -->
 <div class="alert alert-success" *ngIf="successMessage">{{ successMessage }}</div>
 <div class="alert alert-danger" *ngIf="errorMessage">{{ errorMessage }}</div>

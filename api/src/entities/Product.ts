@@ -1,5 +1,6 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { user } from "./user";
+import { image } from "./Image";
 
 @Entity('Product')
 export class Product {
@@ -18,12 +19,7 @@ export class Product {
     content: string
     // Adicione o preço do produto
     @Column({ type: 'integer' })
-    price: number;
-
-    @Column({ type: 'bytea', nullable: true})
-    dados: Buffer | null; // Use o tipo 'bytea' para armazenar dados binários (imagens)
-
-    
+    price: number
     //Declarando para ficar mais fácil
     @Column({type: 'number'})
     user_id: number
@@ -33,5 +29,10 @@ export class Product {
     @JoinColumn({name: "user_id"})
     //Uma ray de Product, pois tem varios Products para um usuario
     user: user
+    //Teclarando que vai ter varias imagens para um produto
+    @OneToMany(() => image, image => image.product)
+    //Uma ray de Images, pois tem varias Imagens para um Produto
+    images: image[];
+
 }
   

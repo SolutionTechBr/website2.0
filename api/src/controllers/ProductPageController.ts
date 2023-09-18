@@ -1,13 +1,11 @@
-import { Request, Response } from "express"
+ import { Request, Response } from "express"
 import { ProductRepository } from "../services/ProductService"
-
 
 export class ProductPageController {
 
     async CreateProduct(req: Request, res: Response) {
-        const { category, name, content, price, user_id, dados } = req.body
-      
-        //Criando Agendamento com o user_id e o conteúdo
+        const { category, name, content, price, user_id } = req.body
+
         if (!category) {
             return res.status(400).json({ message: 'Categoria do produto está vazia!'})
         }
@@ -27,13 +25,10 @@ export class ProductPageController {
         if (!user_id) {
             return res.status(400).json({ message: 'Informe o usuario!'})
         }
-
-        if (!dados) {
-            return res.status(400).json({ message: 'Coloque uma foto!'})
-        }
-
+        
         try {
-            const newProduct = ProductRepository.create({category, name, content, price, user_id, dados})
+            const newProduct = ProductRepository.create({
+            category, name, content, price, user_id })
 
             await ProductRepository.save(newProduct)
 
@@ -69,9 +64,7 @@ export class ProductPageController {
           return res.status(500).json({ message: 'Internal Server Error' });
         }
     }
-      
-      
-      
+    
 
     async listProducts(req: Request, res: Response) {
         try {

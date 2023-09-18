@@ -1,6 +1,5 @@
 import { Request, Response } from "express"
 import { ClientRepository } from "../services/ClientService"
-import { client } from "../entities/Client"
 
 export class ClientPageController {
 

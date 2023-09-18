@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders  } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
@@ -17,9 +17,15 @@ export class ProductService {
     return this.http.delete(`${this.apiUrl}/products/${productId}`);
   }
 
-  addProducts(Product:any) {
-    return this.http.post(`${this.apiUrl}/products`, Product)
+  addProduct(formData: FormData) {
+    // Crie um cabeçalho personalizado para o FormData
+    const headers = new HttpHeaders();
+    headers.append('enctype', 'multipart/form-data'); // Informe o tipo de conteúdo
+  
+    // Faça a solicitação POST usando o FormData e o cabeçalho personalizado
+    return this.http.post(`${this.apiUrl}/products`, formData, { headers });
   }
+
 
   // Adicione outros métodos para interagir com seu servidor conforme necessário
 }

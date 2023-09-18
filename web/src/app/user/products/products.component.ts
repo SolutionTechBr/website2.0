@@ -26,11 +26,10 @@ export class ProductsComponent {
   cart: any[] = [];
   modalRef?: BsModalRef;
   title: any;
-  successMessage: string = ''; // Mensagem de sucesso
-  errorMessage: string = '';   // Mensagem de erro
+
   
   Product: any = {
-    imageUrl: '',
+    dados: '',
     category: '',
     name: '',
     content: '',
@@ -72,6 +71,10 @@ export class ProductsComponent {
       // Inicialmente, exiba todos os produtos
       this.filteredProducts = this.allProducts;
     });
+  }
+
+  decodeImageBytesToBase64(dados: string): string {
+    return `data:image/png;base64,${dados}`;
   }
   
 

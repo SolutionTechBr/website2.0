@@ -1,4 +1,4 @@
-<!-- products.component.html -->
+<!-- filtro dos produtos -->
 
 <div class="header mb-5 mt-5 text-center">
   <ul class="categories mt-3">
@@ -17,12 +17,16 @@
   </ul>  
 </div>
 
+<!--Importando todos os produtos-->
 
 <div class="container mb-5 mt-5">
   <div class="row">
     <div class="col-lg-4 col-md-4 col-sm-6" *ngFor="let product of filteredProducts">
       <div class="card mt-3">
-        <img src="{{ product.imageUrl }}" alt="{{ product.name }}" class="card-img-top">
+        <div class="card mt-3">
+          <img [src]="decodeImageBytesToBase64(product.dados)" alt="{{ product.name }}" class="card-img-top">
+          <!-- Resto do seu código HTML -->
+        </div>
         <div class="card-body text-center">
           <h5 class="card-title">{{ product.name }}</h5>
           <p class="card-text">{{ product.description }}</p>
@@ -45,6 +49,7 @@
   </div>
 </div>
 
+<!--Botão do modal-->
 
 <div class="mb-5 mt-5 text-center">
   <div class="btn btn-primary mb-3">
@@ -54,6 +59,7 @@
   </div>
 </div>
 
+<!--Modal-->
 
 <ng-template #modalTemplate>
   <div class="modal-header bg-primary text-white">
@@ -86,14 +92,4 @@
   </div>
 </ng-template>
 
-
-
-<div class="alert alert-success" *ngIf="successMessage">
-    {{ successMessage }}
-</div>
-  
-<div class="alert alert-danger" *ngIf="errorMessage">
-    {{ errorMessage }}
-</div>
-  
   

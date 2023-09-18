@@ -16,7 +16,7 @@ routes.get('/user', new UserPageController().listUser)
 
 //Responsavel por criar os produtos 
 routes.post('/products', new ProductPageController().CreateProduct)
-// Rota para excluir um produto pelo ID
+// Rota para excluir um produto pelo ID 
 routes.delete('/products/:id', new ProductPageController().deleteProduct);
 //Listar todos os produtos
 routes.get('/products/:idUser/listProduct', new ProductPageController().listProducts)
@@ -31,9 +31,9 @@ routes.get('/client', new ClientPageController().listClients)
 //rota responsavel por Salvar a imagem
 routes.post('/image', upload.single('file'), new ImagePageController().UploadImage)
 //rota responsavel por Deletar a imagem
-//routes.delete('/image', upload.siingle('file'), new ImagePageController().UploadImage)
+routes.delete('/image/:id', upload.single('file'), new ImagePageController().deleteImage)
 //rota responsavel por Listar as imagens
-//routes.get('/image', upload.sngle('file'), new ImagePageController().UploadImage)
+routes.get('/image', upload.single('file'), new ImagePageController().listImage)
 
 
 export default routes

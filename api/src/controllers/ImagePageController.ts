@@ -1,5 +1,6 @@
 import { Request, Response } from "express"
 import { ImageRepository } from "../services/ImageService"
+import fs from "fs"
 
 export class ImagePageController {
 
@@ -30,42 +31,44 @@ export class ImagePageController {
     }
 
     async deleteImage(req: Request, res: Response) {
-        const { id } = req.params;
+      const { id } = req.params;
 
-        
-        // Certifique-se de que o id seja um número
-        const productId = parseInt(id);
-      
-        try {
-          // Verifique se o produto existe
-          const product = await ImageRepository.findOneBy({ id: Number(productId) });
 
-          if (!product) {
-            return res.status(404).json({ message: 'Produto não encontrado' });
-          }
-      
-          // Remova o produto do banco de dados
-          await ImageRepository.remove(product);
-      
-          return res.status(200).json({ message: 'Imagem salva com sucesso' });
-        } catch (error) {
-          console.error(error);
-          return res.status(500).json({ message: 'Internal Server Error' });
+      // Certifique-se de que o id seja um número
+      const imageId = parseInt(id);
+    
+      try {
+        // Verifique se o produto existe
+        const image = await ImageRepository.findOneBy({ id: Number(imageId) });
+
+        if (!image) {
+          return res.status(404).json({ message: 'Imagem não encontrado' });
         }
+
+        fs.unlinkSync(image.url)
+    
+        // Remova o produto do banco de dados
+        await ImageRepository.remove(image);
+    
+        return res.status(200).json({ message: 'Imagem deletada com sucesso' });
+      } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: 'Internal Server Error' });
+      }
     }
       
       
     
-   //async listImage(req: Request, res: Response) {
-   //    try {
-   //     const products = await ImageRepository.find(); // Isso irá buscar todos os produtos no banco de dados
+   async listImage(req: Request, res: Response) {
+      try {
+       const images = await ImageRepository.find(); // Isso irá buscar todos os produtos no banco de dados
      
-   //      return res.json(images);
-   //   } catch (error) {
-   //      console.log(error);
-   //      return res.status(500).json({ message: 'Internal Server Error' });
-   //     }
-   // }
+        return res.json(images);
+      } catch (error) {
+        console.log(error);
+        return res.status(500).json({ message: 'Internal Server Error' });
+      }
+  }
       
 
 }

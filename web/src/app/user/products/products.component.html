@@ -24,12 +24,13 @@
     <div class="col-lg-4 col-md-4 col-sm-6" *ngFor="let product of filteredProducts">
       <div class="card mt-3">
         <div class="card mt-3">
-          <img [src]="decodeImageBytesToBase64(product.dados)" alt="{{ product.name }}" class="card-img-top">
-          <!-- Resto do seu código HTML -->
+         <!-- <img src="{{ product.imageUrl }}" alt="{{ product.name }}" class="card-img-top">
+         <img [src]="decodeImageBytesToBase64(product.dados)" alt="{{ product.name }}" class="card-img-top">
+           Resto do seu código HTML -->
         </div>
         <div class="card-body text-center">
           <h5 class="card-title">{{ product.name }}</h5>
-          <p class="card-text">{{ product.description }}</p>
+          <p class="card-text">{{ product.content }}</p>
           <p class="card-text">Preço: R$ {{ product.price }}</p>
           <div class="star mt-3 align-item-center">
             <!-- Adicione as estrelas aqui, se necessário -->

@@ -13,25 +13,16 @@ export class ProductService {
     return this.http.get(`${this.apiUrl}/products/1/listProduct`)
   }
 
-  deleteProduct(productId: number) {
+  getAllImages() {
+    return this.http.get(`${this.apiUrl}/image`)
+  }
+
+  deleteProducts(productId: number) {
     return this.http.delete(`${this.apiUrl}/products/${productId}`);
   }
 
-  addProduct(formData: FormData) {
-    // Crie um cabeçalho personalizado para o FormData
-    const headers = new HttpHeaders();
-    headers.append('enctype', 'multipart/form-data'); // Informe o tipo de conteúdo
-  
-    // Faça a solicitação POST usando o FormData e o cabeçalho personalizado
-    return this.http.post(`${this.apiUrl}/products`, formData, { headers });
+  addProducts(Product:any) {
+    return this.http.post(`${this.apiUrl}/products`, Product)
   }
 
-
-  // Adicione outros métodos para interagir com seu servidor conforme necessário
-}
-
-export class CarrinhoService {
-  carrinho: any[] = [];
-
-  constructor() { }
 }

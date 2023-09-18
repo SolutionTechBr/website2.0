@@ -15,6 +15,7 @@ export class ProductsComponent {
   categories: string[] = ['bolo', 'cone_trufado', 'bolo_pote'];
   filteredProducts: any[] = []; // Array para armazenar produtos filtrados
   allProducts: any[] = []; // Array para armazenar todos os produtos
+  allImages : any [] = []
   selectedCategory: string = '*'; // Inicialmente, define como '*' (todos)
   precoTotal: number = 0;
   itenTotal: number = 0;
@@ -29,7 +30,6 @@ export class ProductsComponent {
 
   
   Product: any = {
-    dados: '',
     category: '',
     name: '',
     content: '',
@@ -71,10 +71,12 @@ export class ProductsComponent {
       // Inicialmente, exiba todos os produtos
       this.filteredProducts = this.allProducts;
     });
-  }
-
-  decodeImageBytesToBase64(dados: string): string {
-    return `data:image/png;base64,${dados}`;
+    // Chame o serviço para carregar todos os produtos
+    this.ProductService.getAllImages().subscribe((images) => {
+      this.allImages = images as any[]; // Forçar a tipagem para um array
+      // Inicialmente, exiba todos os produtos
+      this.filteredProducts = this.allImages;
+    });
   }
   
 
